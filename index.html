@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random Password Generator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f2f4f8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0;
+      padding: 40px;
+    }
+    .container {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .passwords {
+      margin-top: 20px;
+    }
+    .passwords div {
+      background: #f0f0f0;
+      padding: 8px;
+      border-radius: 6px;
+      margin-bottom: 5px;
+      font-family: monospace;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Strong Password Generator</h2>
+    <input type="number" id="count" min="1" max="50" placeholder="Number of passwords">
+    <input type="number" id="length" min="6" max="50" placeholder="Password length">
+    <button onclick="generatePasswords()">Generate</button>
+    <div class="passwords" id="passwords"></div>
+  </div>
+
+  <script>
+    function generatePasswords() {
+      const count = parseInt(document.getElementById("count").value);
+      const length = parseInt(document.getElementById("length").value);
+      const output = document.getElementById("passwords");
+      output.innerHTML = "";
+
+      const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}[]:;<>,.?~";
+
+      if (!count || !length || count < 1 || length < 6) {
+        output.innerHTML = "<div>Please enter valid values.</div>";
+        return;
+      }
+
+      for (let i = 0; i < count; i++) {
+        let pwd = "";
+        for (let j = 0; j < length; j++) {
+          pwd += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        const div = document.createElement("div");
+        div.textContent = pwd;
+        output.appendChild(div);
+      }
+    }
+  </script>
+</body>
+</html>
