@@ -28,8 +28,7 @@
       background: var(--bg);
       color: var(--text);
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      justify-content: center;
       margin: 0;
       padding: 40px;
       transition: background 0.3s, color 0.3s;
@@ -42,10 +41,10 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       max-width: 400px;
       width: 100%;
+      text-align: center;
     }
 
     h2 {
-      text-align: center;
       margin-bottom: 20px;
     }
 
@@ -58,22 +57,23 @@
       border-radius: 8px;
       background: var(--input-bg);
       color: var(--text);
+      cursor: pointer;
     }
 
     .theme-btn {
       margin-bottom: 10px;
-      cursor: pointer;
     }
 
     .passwords {
-      margin-top: 20px;
+      margin-top: 10px;
     }
 
     .password-row {
       display: flex;
+      justify-content: center;
       align-items: center;
       gap: 8px;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
     }
 
     .password-row div {
@@ -83,17 +83,23 @@
       border-radius: 6px;
       font-family: monospace;
       word-break: break-all;
+      text-align: left;
     }
 
     .copy-btn {
       padding: 6px 10px;
       font-size: 13px;
-      cursor: pointer;
       border-radius: 6px;
       border: 1px solid var(--border);
       background: var(--card);
       color: var(--text);
       width: auto;
+      cursor: pointer;
+    }
+
+    .master-copy {
+      margin: 12px 0;
+      font-weight: 600;
     }
   </style>
 </head>
@@ -110,7 +116,13 @@
 
     <button onclick="generatePasswords()">Generate</button>
 
+    <!-- Master Copy (Top) -->
+    <button class="master-copy" onclick="copyAll()">Copy All Passwords</button>
+
     <div class="passwords" id="passwords"></div>
+
+    <!-- Master Copy (Bottom) -->
+    <button class="master-copy" onclick="copyAll()">Copy All Passwords</button>
   </div>
 
   <script>
@@ -158,6 +170,16 @@
         row.appendChild(div);
         row.appendChild(btn);
         output.appendChild(row);
+      }
+    }
+
+    function copyAll() {
+      const passwords = [...document.querySelectorAll(".password-row div")]
+        .map(d => d.textContent)
+        .join("\n");
+
+      if (passwords) {
+        navigator.clipboard.writeText(passwords);
       }
     }
   </script>
